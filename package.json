@@ -1,0 +1,18 @@
+{
+  "name": "slack-twitter-test",
+  "description": "Slack Twitter integration",
+  "version": "0.0.1",
+  "repository": {},
+  "scripts": {},
+  "engines": {
+    "node": ">=7",
+    "npm": ">=3"
+  },
+  "dependencies": {
+    "bluebird": "",
+    "request": "",
+    "twitter-node-client": "",
+    "winston": ""
+  },
+  "author": "Chiraag Mundhe"
+}
