@@ -34,11 +34,11 @@ function createLogger() {
 function createTwitter() {
 
   let twitter = new Twitter(TWITTER_API_CONFIG);
-  
+
   twitter.getUserTimeline = ((fn) => {
-    
+
     return function getUserTimeline(params) {
-      
+
       return new Promise((resolve, reject) => {
         fn(
           params,
@@ -60,7 +60,7 @@ function createTwitter() {
 }
 
 function main() {
-  
+
   let logger = createLogger();
   let twitter = createTwitter();
 
@@ -68,7 +68,7 @@ function main() {
 
     return twitter.getUserTimeline({
       screen_name: 'realDonaldTrump',
-      count: 1 
+      count: 1
     });
 
   }).then((data) => {
@@ -105,7 +105,7 @@ function poll(sinceId, twitter, logger) {
     return new Promise((resolve, reject) => {
       setTimeout(resolve, POLL_INTERVAL);
     });
-  
+
   }).then(() => {
     
     return poll(sinceId, twitter, logger);
