@@ -43,11 +43,9 @@ function poll(sinceId, logger, slackClient, twitterClient) {
 
   const POLL_INTERVAL = (process.env.mode == 'prod') ? 30 * 1000 : 10 * 1000;
 
-  return Promise.try(() => {
+  return new Promise((resolve, reject) => {
 
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, POLL_INTERVAL);
-    });
+    setTimeout(resolve, POLL_INTERVAL);
 
   }).then(() => {
 
