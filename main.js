@@ -7,8 +7,9 @@ const lib = require('./lib');
 const Promise = require('bluebird');
 
 const TWITTER_SCREEN_NAME = 
-//'realDonaldTrump'
-'notiven';
+'realDonaldTrump'
+//'notiven'
+;
 
 function main() {
 
