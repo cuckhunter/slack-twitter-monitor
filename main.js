@@ -46,7 +46,7 @@ function main() {
 
 function poll(sinceId, logger, slackClient, twitterClient) {
 
-  const POLL_INTERVAL = (process.env.mode == 'prod') ? 30 * 1000 : 10 * 1000;
+  const POLL_INTERVAL = 30 * 1000;
 
   return new Promise((resolve, reject) => {
 
