@@ -1,3 +1,5 @@
+/* jshint camelcase: false */
+
 'use strict';
 
 const lib = require('./lib');
@@ -14,14 +16,16 @@ function main() {
 
     return twitterClient.getUserTimeline({
       screen_name: 'realDonaldTrump',
-      count: 1
+      count: 2
     });
 
   }).then((data) => {
 
-    ///*test*/ slackClient.publish(data, logger);
-
-    return poll(data[0].id_str, logger, slackClient, twitterClient);
+    return poll(
+      data[process.env.PORT ? 0 : 1].id_str,
+      logger,
+      slackClient,
+      twitterClient);
 
   }).catch((err) => {
 
@@ -36,7 +40,7 @@ function main() {
 
 function poll(sinceId, logger, slackClient, twitterClient) {
 
-  const POLL_INTERVAL = 10 * 1000;
+  const POLL_INTERVAL = process.env.PORT ? 30 * 1000 : 10 * 1000;
 
   return Promise.try(() => {
 
@@ -45,8 +49,6 @@ function poll(sinceId, logger, slackClient, twitterClient) {
     });
 
   }).then(() => {
-
-    logger.info('polling');
 
     return twitterClient.getUserTimeline({
       screen_name: 'realDonaldTrump',
@@ -57,7 +59,7 @@ function poll(sinceId, logger, slackClient, twitterClient) {
 
     if (data.length) {
       sinceId = data[0].id_str;
-      return slackClient.publish(data, logger);
+      return slackClient.publish(data);
     }
 
   }).then(() => {
