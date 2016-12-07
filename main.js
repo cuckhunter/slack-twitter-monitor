@@ -19,7 +19,7 @@ function main() {
 
   }).then((data) => {
 
-    /*test*/ slackClient.publish(data, logger);
+    ///*test*/ slackClient.publish(data, logger);
 
     return poll(data[0].id_str, logger, slackClient, twitterClient);
 
