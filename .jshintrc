@@ -1,0 +1,85 @@
+{
+
+  // Globals
+  "globals": {
+    
+    // Mocha
+    "before": false,
+    "after": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "describe": false,
+    "it": false
+
+  },
+
+  // Enforcing options
+  "bitwise"       : false,     // Prohibit bitwise operators(&, |, ^, etc.).
+  "curly"         : true,      // Require {} for every new block or scope
+  "eqeqeq"        : false,     // Require triple equals, i.e. `===`.
+  "esversion"     : 6,         // Allow ECMAScript 6 syntax.
+  "forin"         : false,     // Tolerate `for in` loops without `hasOwnProperty`.
+  "immed"         : true,      // Require immediate invocations to be wrapped in parens e.g. `( function (){}() );`
+  "latedef"       : "nofunc",  // Prohibit variable use before definition.
+  "newcap"        : true,      // Require capitilization of all constructor functions e.g. `new F()`.
+  "noarg"         : true,      // Prohibit use of `arguments.caller` and `arguments.callee`.
+  "noempty"       : true,      // Prohibit use of empty blocks
+  "nonew"         : true,      // Prohibit use of constructor functions for side-effects.
+  "plusplus"      : false,     // Prohibit use of unary `++` and `--` operators.
+  "quotmark"      : false,     // Force only single or double quotes.
+  "undef"         : true,      // Require all non-global variables be declared before they are used.
+  "unused"        : "vars",    // Warn about variables declared but never used.
+  "strict"        : true,
+  "camelcase"     : true,      // Force variable names to use camelCase or UPPER_CASE with underscores.
+  "maxparams"     : 4,         // Maximum # of function parameters
+  "maxdepth"      : 4,         // Maximum # of nested blocks within a function
+  "maxstatements" : 25,        // Maximum # of statements in a function
+  "maxcomplexity" : 15,        // cyclomatic complexity
+  "maxlen"        : 200,       // Maximum length of a line
+  "trailing"      : true,      // Prohibit trailing whitespaces.
+  //"indent"        : 2,       // WARNING! This forces the option "white" to "true".
+
+  // Relaxing options
+  "asi"           : false,     // Tolerate Automatic Semicolon Insertion (no semicolons).
+  "boss"          : false,     // Tolerate assignments inside if, for & while.
+  "debug"         : false,     // Allow debugger statements e.g. browser breakpoints.
+  "eqnull"        : true,      // Tolerate use of `== null`.
+  "es5"           : false,     // Allow ECMAScript 5 syntax.
+  "evil"          : false,     // Tolerate use of `eval`.
+  "expr"          : true,      // Tolerate `ExpressionStatement` as Programs.
+  "funcscope"     : false,     // Suppress warning about variables refrenced out of scope
+  "globalstrict"  : false,     // Allow global "use strict" (also enables 'strict').
+  "iterator"      : false,     // Suppress warnings about the __iterator__ property
+  "lastsemic"     : false,     // Suppress warnings about missing semicolon for the last statement in a one-line block
+  "laxbreak"      : false,     // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
+  "laxcomma"      : true,      // Suppress warnings about comma-first coding style.
+  "loopfunc"      : false,     // Allow functions to be defined within loops.
+  "multistr"      : false,     // Suppress warnings about multi-line strings
+  "proto"         : false,     // suppresses warnings about the __proto__ property
+  "scripturl"     : false,     // Tolerate script-targeted URLs.
+  "smarttabs"     : false,     // suppresses warnings about mixed tabs and spaces
+  "shadow"        : false,     // Allows re-define variables later in code e.g. `var x=1; x=2;`.
+  "sub"           : false,     // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
+  "supernew"      : false,     // Tolerate `new function () { ... };` and `new Object;`.
+  "validthis"     : false,
+
+  // Environments
+  "browser"       : false,      // Standard browser globals e.g. `window`, `document`.
+  "couch"         : false,
+  "devel"         : true,      // Allow development statements e.g. `console.log();`.
+  "dojo"          : false,
+  "jquery"        : false,
+  "mootools"      : false,
+  "node"          : true,
+  "prototypejs"   : false,
+  "rhino"         : false,
+  "worker"        : false,     // Web workers
+  "wsh"           : false,     // Windows Scripting Host.
+  "yui"           : false,
+
+  // Legacy JS Lint
+  "nomen"         : false,
+  "onevar"        : false,
+  "passfail"      : false,
+  "white"         : false      // Check against strict whitespace and indentation rules. (currently too strict)
+}

@@ -3,7 +3,9 @@
   "description": "Slack Twitter integration",
   "version": "0.0.1",
   "repository": {},
-  "scripts": {},
+  "scripts": {
+    "start": "node main"
+  },
   "engines": {
     "node": ">=7",
     "npm": ">=3"
