@@ -1,6 +1,6 @@
 {
-  "name": "slack-twitter-test",
-  "description": "Slack Twitter integration",
+  "name": "slack-twitter-monitor",
+  "description": "Twitter integration for Slack",
   "version": "0.0.1",
   "repository": {},
   "scripts": {
