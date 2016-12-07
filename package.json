@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bluebird": "",
+    "dotenv": "",
     "request": "",
     "twitter-node-client": "",
     "winston": ""

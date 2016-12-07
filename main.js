@@ -2,6 +2,7 @@
 
 'use strict';
 
+require('dotenv').config();
 const lib = require('./lib');
 const Promise = require('bluebird');
 
@@ -22,7 +23,7 @@ function main() {
   }).then((data) => {
 
     return poll(
-      data[process.env.PORTO ? 0 : 1].id_str,
+      data[process.env.MODE == 'prod' ? 0 : 1].id_str,
       logger,
       slackClient,
       twitterClient);
@@ -40,7 +41,7 @@ function main() {
 
 function poll(sinceId, logger, slackClient, twitterClient) {
 
-  const POLL_INTERVAL = process.env.PORT ? 30 * 1000 : 10 * 1000;
+  const POLL_INTERVAL = (process.env.mode == 'prod') ? 30 * 1000 : 10 * 1000;
 
   return Promise.try(() => {
 
