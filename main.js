@@ -22,7 +22,7 @@ function main() {
   }).then((data) => {
 
     return poll(
-      data[process.env.PORT ? 0 : 1].id_str,
+      data[process.env.PORTO ? 0 : 1].id_str,
       logger,
       slackClient,
       twitterClient);
