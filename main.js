@@ -6,6 +6,10 @@ require('dotenv').config();
 const lib = require('./lib');
 const Promise = require('bluebird');
 
+const TWITTER_SCREEN_NAME = 
+//'realDonaldTrump'
+'notiven';
+
 function main() {
 
   const logger = lib.getLogger();
@@ -16,7 +20,7 @@ function main() {
   Promise.try(() => {
 
     return twitterClient.getUserTimeline({
-      screen_name: 'realDonaldTrump',
+      screen_name: TWITTER_SCREEN_NAME,
       count: 2
     });
 
@@ -50,7 +54,7 @@ function poll(sinceId, logger, slackClient, twitterClient) {
   }).then(() => {
 
     return twitterClient.getUserTimeline({
-      screen_name: 'realDonaldTrump',
+      screen_name: TWITTER_SCREEN_NAME,
       since_id: sinceId
     });
 
