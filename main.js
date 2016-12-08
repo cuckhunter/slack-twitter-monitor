@@ -22,6 +22,7 @@ function main() {
 
     return twitterClient.getUserTimeline({
       screen_name: TWITTER_SCREEN_NAME,
+      include_rts: true,
       count: 2
     });
 
@@ -56,6 +57,7 @@ function poll(sinceId, logger, slackClient, twitterClient) {
 
     return twitterClient.getUserTimeline({
       screen_name: TWITTER_SCREEN_NAME,
+      include_rts: true,
       since_id: sinceId
     });
 
