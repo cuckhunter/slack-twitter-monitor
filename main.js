@@ -58,7 +58,7 @@ async function poll(sinceId, logger, slackClient, twitterClient) {
 
   if (data.length) {
     sinceId = data[0].id_str;
-    slackClient.publish(data);
+    await slackClient.publish(data);
   }
     
   return poll(sinceId, logger, slackClient, twitterClient);
