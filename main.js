@@ -17,6 +17,9 @@ async function main() {
   const slackClient = lib.getSlackClient(logger);
   const server = lib.getServer(logger, slackClient);
 
+  // Start server
+  server.start();
+
   try {
  
     const data = await twitterClient.getUserTimeline({
@@ -24,7 +27,6 @@ async function main() {
       include_rts: true,
       count: 2
     });
-
     
     await poll(
       data[process.env.MODE == 'prod' ? 0 : 1].id_str,
@@ -37,9 +39,6 @@ async function main() {
     logger.error(err, Array.from(arguments).slice(1));
 
   }
-
-  // Start server
-  server.start();
 
 }
 
