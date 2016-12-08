@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "repository": {},
   "scripts": {
-    "start": "node main"
+    "start": "node --harmony main"
   },
   "engines": {
     "node": ">=7",
