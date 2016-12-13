@@ -11,13 +11,11 @@
     "npm": ">=3"
   },
   "dependencies": {
-    "bluebird": "",
     "dotenv": "",
     "esprima": "",
     "moment": "",
     "request": "",
     "twitter-node-client": "",
     "winston": ""
-  },
-  "author": "Chiraag Mundhe"
+  }
 }
