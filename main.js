@@ -10,7 +10,7 @@ async function main() {
     
     const HOSTNAME = $env.HOSTNAME;
     const PORT = $env.PORT || 80;
-    console.log('$env:', $env);
+    $logget.error('$env:', $env);
     $server.listen(PORT, () => {
       $logger.info(`Server running at http://${HOSTNAME}:${PORT}/`);
     });
