@@ -13,6 +13,8 @@
   "dependencies": {
     "bluebird": "",
     "dotenv": "",
+    "esprima": "",
+    "moment": "",
     "request": "",
     "twitter-node-client": "",
     "winston": ""
