@@ -8,9 +8,10 @@ async function main() {
   
   await inject(async function([$env, $logger, $server, $taskService]) {
     
+    const HOSTNAME = $env.HOSTNAME;
     const PORT = $env.PORT || 80;
     $server.listen(PORT, () => {
-      $logger.info(`Server running at http://localhost:${PORT}/`);
+      $logger.info(`Server running at http://${HOSTNAME}:${PORT}/`);
     });
 
     const [i, j] = ($env.MODE == 'prod') ?
