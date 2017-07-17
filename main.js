@@ -11,7 +11,7 @@ async function main() {
 
   } catch (e) {
     
-    console.error('Process crashed', e);
+    console.error(e);
     process.exit(1);
 
   }
