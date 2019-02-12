@@ -2,19 +2,19 @@
 
 async function main() {
 
-  try {
+  // try {
 
     const inject = require('./lib/inject');
     const app = require('./lib/app');
     inject.ready();
     await app();
 
-  } catch (e) {
+  // } catch (e) {
     
-    console.error('App error:', e);
-    process.exit(1);
+  //   console.error('App error:', e);
+  //   process.exit(1);
 
-  }
+  // }
 
 }
 
