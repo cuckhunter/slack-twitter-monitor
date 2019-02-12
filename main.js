@@ -13,12 +13,13 @@ async function main() {
 
   } catch (e) {
 
+    const SLACK_CHANNEL = '#slack-twitter-monitor';
     const params = {
       url: process.env.SLACK_API_ENDPOINT,
       body: JSON.stringify({
-        channel: '#slack-twitter-monitor',
+        channel: SLACK_CHANNEL,
         username: 'twitter',
-        text: `<@U24PPP3BK> 🌎 Twitter bot is kill 🌎\n\n\`\`\`${message}\`\`\``,
+        text: `<@U24PPP3BK> 🌎 Twitter bot is kill 🌎\n\n\`\`\`${e.stack}\`\`\``,
         icon_url: 'https://a.slack-edge.com/66f9/img/services/twitter_36.png'
         //icon_emoji: ''
       })
