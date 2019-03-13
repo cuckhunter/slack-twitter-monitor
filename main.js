@@ -21,6 +21,9 @@ process.on('uncaughtException', async function(error) {
     }
 
     active = true;
+
+    console.error('Uncaught error:', error);
+
     const request = require('request');
     const SLACK_CHANNEL = '#slack-twitter-monitor';
     const params = {
@@ -45,6 +48,8 @@ process.on('uncaughtException', async function(error) {
       });
 
     });
+
+    console.log(`Reported error to Slack channel ${SLACK_CHANNEL}`);
 
   } catch (e) {
     console.log('Error-handling error:', e);
