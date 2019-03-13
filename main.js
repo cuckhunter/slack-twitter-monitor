@@ -55,7 +55,8 @@
 async function main() {
 
   let i = 0;
-  setInterval(() => console.log(`interval loop ${i++}`), 30000);
+  console.log(`interval loop ${i}`);
+  setInterval(() => console.log(`interval loop ${i += 30}`), 30000);
   const inject = require('./lib/inject');
   const app = require('./lib/app');
   inject.ready();
