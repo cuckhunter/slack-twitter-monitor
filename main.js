@@ -2,7 +2,6 @@
 
 function main() {
 
-  const request = require('request');
   const inject = require('./lib/inject');
   const app = require('./lib/app');
   inject.ready();
@@ -10,11 +9,11 @@ function main() {
 
 }
 
-
 process.on('uncaughtException', function(error) {
   
   try {
 
+    const request = require('request');
     const SLACK_CHANNEL = '#slack-twitter-monitor';
     const params = {
       url: process.env.SLACK_API_ENDPOINT,
