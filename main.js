@@ -1,17 +1,10 @@
 'use strict';
 
-function main() {
-
-  const inject = require('./lib/inject');
-  const app = require('./lib/app');
-  inject.ready();
-  app();
-
-}
-
 let active = false;
 
 process.on('uncaughtException', async function(error) {
+ 
+  console.log('in uncaughtException:', error);
 
   try {
 
@@ -58,5 +51,14 @@ process.on('uncaughtException', async function(error) {
   }
 
 });
+
+function main() {
+
+  const inject = require('./lib/inject');
+  const app = require('./lib/app');
+  inject.ready();
+  app();
+
+}
 
 main();
