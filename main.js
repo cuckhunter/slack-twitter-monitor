@@ -9,10 +9,18 @@ function main() {
 
 }
 
-process.on('uncaughtException', function(error) {
-  
+let active = false;
+
+process.on('uncaughtException', async function(error) {
+
   try {
 
+    if (active) {
+      console.error('Error-handling error:', error);
+      process.exit(1);
+    }
+
+    active = true;
     const request = require('request');
     const SLACK_CHANNEL = '#slack-twitter-monitor';
     const params = {
@@ -26,25 +34,21 @@ process.on('uncaughtException', function(error) {
       })
     };
 
-    request.post(params, (err, response, body) => {
+    await new Promise((resolve, reject) => {
 
-      try {
+      request.post(params, (err, response, body) => {
         if (err) {
-          console.error('Error-handling error:', new Error(JSON.stringify({err, response, body})));
+          reject(new Error(JSON.stringify({err, response, body})));
         } else {
-          console.error('App error:', error);
-          console.log(`Reported error to Slack channel ${SLACK_CHANNEL}`);
+          resolve(response, body);
         }
-      } catch (e) {
-        console.error('Error-handling error:', e);
-      } finally {
-        process.exit(1);
-      }
+      });
 
     });
 
   } catch (e) {
     console.log('Error-handling error:', e);
+  } finally {
     process.exit(1);
   }
 
