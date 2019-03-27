@@ -9,7 +9,7 @@ process.on('uncaughtException', async function(error) {
   try {
 
     if (active) {
-      console.error('Error-handling error:', error);
+      console.error('Error-handling error active:', error);
       process.exit(1);
     }
 
