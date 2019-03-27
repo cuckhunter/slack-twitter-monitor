@@ -24,7 +24,7 @@ process.on('uncaughtException', async function(error) {
       body: JSON.stringify({
         channel: SLACK_CHANNEL,
         username: 'twitter',
-        text: `<@U24PPP3BK> 🌎 Twitter bot is kill 🌎\n\n\`\`\`${e.stack}\`\`\``,
+        text: `<@U24PPP3BK> 🌎 Twitter bot is kill 🌎\n\n\`\`\`${error.stack}\`\`\``,
         icon_url: 'https://a.slack-edge.com/66f9/img/services/twitter_36.png'
         //icon_emoji: ''
       })
