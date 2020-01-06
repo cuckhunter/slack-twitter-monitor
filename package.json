@@ -16,6 +16,7 @@
     "moment": "",
     "pg": "",
     "request": "",
+    "tdlib": "github:wfjsw/node-tdlib",
     "twitter-node-client": "",
     "winston": ""
   }
