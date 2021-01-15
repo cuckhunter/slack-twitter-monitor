@@ -18,11 +18,10 @@ process.on('uncaughtException', async function(error) {
     console.error('Uncaught error:', error);
 
     const request = require('request');
-    const SLACK_CHANNEL = '#slack-twitter-monitor';
+    const channel = 'logging';
     const params = {
-      url: process.env.SLACK_API_ENDPOINT,
+      url: JSON.parse(process.env.SLACK_API_ENDPOINT)[channel],
       body: JSON.stringify({
-        channel: SLACK_CHANNEL,
         username: 'twitter',
         text: `<@U24PPP3BK> 🌎 Twitter bot is kill 🌎\n\n\`\`\`${error.stack}\`\`\``,
         icon_url: 'https://a.slack-edge.com/66f9/img/services/twitter_36.png'
@@ -42,7 +41,7 @@ process.on('uncaughtException', async function(error) {
 
     });
 
-    console.log(`Reported error to Slack channel ${SLACK_CHANNEL}`);
+    console.log(`Reported error to Slack channel ${channel}`);
 
   } catch (e) {
     console.log('Error-handling error:', e);
