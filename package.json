@@ -11,7 +11,7 @@
     "npm": ">=3"
   },
   "dependencies": {
-    "cheerio": "",
+    "cheerio": "*",
     "cloudscraper": "",
     "dotenv": "",
     "esprima": "",
