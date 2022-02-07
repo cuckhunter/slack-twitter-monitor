@@ -1,0 +1,535 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Numberle</title>
+
+<style>
+  body {
+    margin: 0 auto;
+    padding: 0 0 300px;
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+    background: rgb(20,20,20);
+    text-align: center;
+  }
+
+  .header {
+    display: inline-block;
+    margin: 6px 0 0;
+    border-bottom: 1px solid #999;
+    padding: 0 10px 2px;
+    color: #d7dadc;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    /* letter spacing hack */
+    --letter-spacing: .3rem;
+    letter-spacing: var(--letter-spacing);
+    direction:rtl;
+    text-indent: calc(-1 * var(--letter-spacing));
+  }
+
+  /**
+   * Guesses styles
+   */
+  .guesses {
+    margin: 50px 0 0;
+  }
+
+  .guess {
+    margin: 8px 0 0;
+    text-align: center;
+  }
+
+  .digit {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 4px;
+    border: 2px solid #666;
+    padding: 20px;
+    --dimension: 1.5rem;
+    width: var(--dimension);
+    height: var(--dimension);
+    background: rgb(20,20,20);
+    text-align: center;
+    color: #ddd;
+    font-family: sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: var(--dimension);
+  }
+
+  .digit:not(:empty) {
+    border-color: #999;
+    transition: border-color 0.1s;
+    animation-duration: .15s;
+    animation-name: pop-tile;
+  }
+
+  .digit.absent {
+    --color: #3a3a3c;
+  }
+
+  .digit.present {
+    --color: rgb(181,159,59);
+  }
+
+  .digit.correct {
+    --color: rgb(83,141,78);
+  }
+
+  .digit.absent, .digit.present, .digit.correct {
+    transition: none;
+    animation-name: flip-tile;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes pop-tile {
+    from {
+      transform: scale(100%);
+    }
+    
+    50% {
+      transform: scale(105%);
+    }
+    
+    to {
+      transform: scale(100%);
+    }
+  }
+
+  @keyframes flip-tile {
+    
+    from {
+      transform: rotate3d(0, 0, 0, 0deg);
+    }
+    
+    50% {
+      transform: rotate3d(1, 0, 0, 90deg);
+      background: rgb(20,20,20);
+      border-color: #999;
+    }
+    
+    51% {
+      background: var(--color);
+      border-color: var(--color);
+    }
+    
+    to {
+      transform: rotate3d(1, 0, 0, 0deg);
+      background: var(--color);
+      border-color: var(--color);
+    }
+  }
+
+  .buttons {
+    position: fixed;
+    bottom: 0;
+    padding: 36px 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(
+      rgba(30,30,30,.7),
+      rgba(30,30,30,.9));
+    text-align: center;
+  }
+
+  /**
+   * Button styles
+   * */
+  button {
+    vertical-align: top;
+    margin: 0 3px;
+    border: 0px;
+    border-radius: 6px;
+    padding: 0 14px;
+    height: 3rem;
+    background: rgb(136,146,146);
+    color: #ddd;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: transform .1s;
+  }
+
+  button:hover {
+    transform: scale(105%);
+  }
+
+  button.absent {
+    background: #3a3a3c;
+  }
+
+  button.present {
+    background: rgb(181,159,59);
+  }
+
+  button.correct {
+    background: rgb(83,141,78);
+  }
+
+  /**
+   * Game over style
+   */
+  .game-over {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin:  0 auto;
+    width: 100%;
+    height: 100%;
+    background: rgba(30,30,30,0.5);
+  }
+
+  .game-over-modal {
+    display: inline-block;
+    position: fixed;
+    top: 20%;
+    transform:  translateX(-50%);
+    padding: 40px 90px;
+    background:  #191919;
+    color: #ddd;
+    font-size: 1.2rem;
+  }
+
+  .game-over-text {
+    font-size: 1.2rem;
+  }
+
+  .game-over-retry {
+    display: inline-block;
+    vertical-align: top;
+    margin: 60px 0 0;
+    padding:  10px 20px;
+    background:  rgb(83,141,78);
+    font-size: 1rem;
+    cursor:  pointer;
+  }
+</style>
+
+  </head>
+  <body>
+
+    <div class="header">NUMBERLE</div>
+    <div class="guesses"></div>
+    <div class="buttons"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button>0</button>
+      <button value="Backspace">&#9003;</button><button style="font-size:0.8rem" value="Enter">ENTER</button>
+    </div>
+
+<script type="application/javascript">
+
+  class Game {
+    
+    constructor(answerLength) {
+      this.answer = (Math.random() + '').slice(2, 2 + answerLength).split('');
+      this.guess = [];
+      this.guessIndex = 0;
+      this.absent = {};
+      console.log(this.answer);
+    }
+
+  }
+
+  function checkGuess(guess, answer) {
+    
+    const length = guess.length;
+    let correctDigits = 0;
+    
+    const temp = Array(length);
+    const results = Array(length);
+    
+    for (let i = 0; i < length; i++) {
+
+      const answerDigit = answer[i];
+      const guessDigit = guess[i];
+      
+      console.log(i, answerDigit, guessDigit);
+
+      if (answerDigit == guessDigit) {
+
+        temp[i] = -1;
+        results[i] = { digit: guessDigit, status: $CORRECT };
+        correctDigits++;
+
+      } else if (!~answer.indexOf(guessDigit)) {
+
+        results[i] = { digit: guessDigit, status: $ABSENT };
+        temp[i] = answerDigit;
+
+      } else {
+
+        temp[i] = answerDigit;
+
+      }
+
+    }
+    
+    for (let i = 0; i < length; i++) {
+      
+      if (results[i]) {
+        continue;
+      }
+
+      const guessDigit = guess[i];
+      const tempMatch = temp.indexOf(guessDigit);
+
+      if (~tempMatch) {
+
+        results[i] = { digit: guessDigit, status: $PRESENT };
+        temp[tempMatch] = -1;
+
+      } else {
+
+        results[i] = { digit: guessDigit, status: null };
+
+      }
+
+    }
+    
+    return {
+      results: results,
+      win: (correctDigits == length),
+    };
+
+  }
+
+  /**
+   * Render logic
+   * */
+  const $GUESSES = 'guesses';
+  const $GUESS = 'guess';
+  const $DIGIT = 'digit';
+  const $BUTTONS = 'buttons';
+  const $ABSENT = 'absent';
+  const $PRESENT = 'present';
+  const $CORRECT = 'correct';
+  const $GAME_OVER = 'game-over';
+  const TILE_ANIMATION_DURATION = 300;
+
+  function renderNewGame(answerLength) {
+
+    // Reset guesses
+    const $guesses = document.querySelector('.' + $GUESSES);
+    while ($guesses.firstChild) {
+      $guesses.removeChild($guesses.firstChild);
+    }
+    renderNewGuess(answerLength);
+    
+    // Reset buttons
+    document.querySelectorAll('button').forEach((button) => {
+      button.className = '';
+    });
+
+    // Remove game over modal
+    const $gameOver = document.querySelector('.' + $GAME_OVER);
+    if ($gameOver) {
+      document.body.removeChild($gameOver);
+    }
+
+  }
+
+  function renderNewGuess(answerLength) {
+    
+    console.log('render new guess');
+
+    let contents = '<div class="guess">';
+    for (let i = 0; i < answerLength; i++) {
+      contents += '<div class="digit"></div>';
+    }
+    contents += '</div>';
+    
+    document.querySelector('.' + $GUESSES).insertAdjacentHTML('beforeend', contents);
+
+  }
+
+  function renderDigit(guessIndex, digitIndex, digit) {
+
+    document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1}) .${$DIGIT}:nth-child(${digitIndex + 1})`).innerHTML = digit;
+
+  }
+
+  function renderDeleteDigit(guessIndex, digitIndex) {
+    document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1}) .${$DIGIT}:nth-child(${digitIndex + 1})`).innerHTML = '';
+  }
+
+  async function renderGuessResults(guessIndex, guessResults) {
+    
+    console.log('guess results', guessResults);
+
+    const $guess = document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1})`);
+
+    return await (async function fn (i) {
+      
+      return await new Promise((resolve) => {
+
+        const result = guessResults[i];
+        
+        // Update tile
+        $guess.querySelector(`.${$DIGIT}:nth-child(${i + 1})`).classList.add(result.status || $ABSENT);
+        
+        // Update button
+        if (result.status) { 
+          document.querySelector(`button:nth-child(${~~result.digit || 10})`).classList.add(result.status);
+        }
+
+        setTimeout(resolve, TILE_ANIMATION_DURATION);
+
+      }).then(() => {
+
+        if (++i < guessResults.length) {
+          return fn(i);
+        }
+
+      });
+
+    }(0));
+
+  }
+
+  function renderGameOver(guessIndex) {
+
+    document.body.insertAdjacentHTML('beforeend', `
+  <div class="game-over">
+    <div class="game-over-modal">
+      <div class="game-over-text">You won in ${guessIndex + 1} guesses</div>
+      <button class="game-over-retry">Retry</button>
+    </div>
+  </div>
+  `);
+
+  }
+
+  /**
+   * Initialize game
+   */
+  document.addEventListener("DOMContentLoaded", function(event) {
+
+    const [GUESSING, CHECKING, OVER] = Array(3).keys();
+
+    let game = new Game(5);
+    let state = GUESSING;
+    renderNewGame(game.answer.length);
+
+    window.addEventListener('keydown', (event) => {
+      handleInput(event.key);
+      return false;
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target.matches(`button:not(.${$ABSENT})`)) {
+        handleInput(event.target.value || event.target.innerHTML);
+      }
+    });
+
+    function handleInput(input) {
+
+      switch (state) {
+        
+        case GUESSING: 
+        
+          if (input >= 0 && input < 10) {
+
+            handleDigit(input);
+            break;
+
+          } else if (input == 'Backspace') {
+
+            handleDelete();
+            break;
+
+          } else if (input == 'Enter') {
+
+            handleSubmit();
+            break;
+          }
+        
+        case OVER:
+          
+          if (input == 'Retry' || input == 'Enter') {
+
+            handleRetry();
+            break;
+
+          }
+
+        default:
+
+          console.log('invalid input');
+
+      }
+
+    }
+
+    function handleDigit(digit) {
+
+      if (game.guess.length < game.answer.length) {
+
+        // Add digit to current guess
+        game.guess.push(digit);
+        
+        // Render digit
+        renderDigit(game.guessIndex, game.guess.length - 1, digit);
+
+      }
+
+    }
+
+    function handleDelete() {
+
+      if (game.guess.length) {
+
+        game.guess.pop();
+
+        renderDeleteDigit(game.guessIndex, game.guess.length);
+      }
+
+    }
+
+    async function handleSubmit() {
+
+      if (game.guess.length == game.answer.length) {
+        
+        const {results, win} = checkGuess(game.guess, game.answer);
+        
+        state = CHECKING;
+
+        await renderGuessResults(game.guessIndex, results);
+
+        state = GUESSING;
+
+        if (win) {
+
+          console.log('game over');
+          state = OVER;
+          renderGameOver(game.guessIndex);
+
+        } else {
+
+          for (const result of results) {
+            game.absent[result.digit] = (result.status == $ABSENT);
+          } 
+
+          game.guess = [];
+          game.guessIndex++;        
+
+          renderNewGuess(game.answer.length);
+
+        }
+
+      }
+
+    }
+
+    function handleRetry() {
+      
+      game = new Game(game.answer.length);
+      state = GUESSING;
+      renderNewGame(game.answer.length);
+
+    }
+
+  });
+
+</script>
+
+  </body>
+</html>
