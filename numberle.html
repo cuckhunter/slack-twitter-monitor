@@ -242,7 +242,7 @@
       const answerDigit = answer[i];
       const guessDigit = guess[i];
       
-      console.log(i, answerDigit, guessDigit);
+      //console.log(i, answerDigit, guessDigit);
 
       if (answerDigit == guessDigit) {
 
@@ -328,8 +328,6 @@
   }
 
   function renderNewGuess(answerLength) {
-    
-    console.log('render new guess');
 
     let contents = '<div class="guess">';
     for (let i = 0; i < answerLength; i++) {
@@ -353,7 +351,7 @@
 
   async function renderGuessResults(guessIndex, guessResults) {
     
-    console.log('guess results', guessResults);
+    //console.log('guess results', guessResults);
 
     const $guess = document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1})`);
 
