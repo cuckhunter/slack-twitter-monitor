@@ -442,7 +442,7 @@
 
           } else if (input == 'Enter') {
 
-            handleSubmit();
+            handleSubmitGuess();
             break;
           }
         
@@ -488,7 +488,7 @@
 
     }
 
-    async function handleSubmit() {
+    async function handleSubmitGuess() {
 
       if (game.guess.length == game.answer.length) {
         
