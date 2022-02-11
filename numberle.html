@@ -30,7 +30,7 @@
     /* letter spacing hack */
     --letter-spacing: .3rem;
     letter-spacing: var(--letter-spacing);
-    direction:rtl;
+    direction: rtl;
     text-indent: calc(-1 * var(--letter-spacing));
   }
 
@@ -42,13 +42,16 @@
   }
 
   .guess {
+    display: flex;
+    align-items:  flex-start;
+    justify-content:  space-between;
     margin: 8px 0 0;
-    text-align: center;
+    /*text-align: center;*/
   }
 
   .digit {
-    display: inline-block;
-    vertical-align: top;
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
     margin: 0 4px;
     border: 2px solid #666;
     padding: 20px;
@@ -61,7 +64,7 @@
     font-family: sans-serif;
     font-size: 2rem;
     font-weight: 600;
-    line-height: var(--dimension);
+    /*line-height: var(--dimension);*/
   }
 
   .digit:not(:empty) {
@@ -309,7 +312,7 @@
   const $PRESENT = 'present';
   const $CORRECT = 'correct';
   const $GAME_OVER = 'game-over';
-  const TILE_ANIMATION_DURATION = 300;
+  const ANIMATION_FLIP_TILE = 'flip-tile';
 
   function renderNewGame(answerLength) {
 
@@ -357,35 +360,37 @@
 
   async function renderGuessResults(guessIndex, guessResults) {
     
-    //console.log('guess results', guessResults);
+    // console.log('guess results', guessResults);
 
     const $guess = document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1})`);
 
-    return await (async function fn (i) {
-      
-      return await new Promise((resolve) => {
+    for (let i = 0; i < guessResults.length; i++) {
 
-        const result = guessResults[i];
-        
+      const result = guessResults[i];
+
+      await new Promise((resolve) => {
+
+        // Resolve after animation
+        window.addEventListener('animationend', function animationEnd(event) {
+
+          if (event.animationName == ANIMATION_FLIP_TILE) {
+            window.removeEventListener('animationend', animationEnd);
+            resolve();
+          }
+
+        });
+
         // Update tile
         $guess.querySelector(`.${$DIGIT}:nth-child(${i + 1})`).classList.add(result.status || $ABSENT);
-        
-        // Update button
-        if (result.status) { 
-          document.querySelector(`button:nth-child(${~~result.digit || 10})`).classList.add(result.status);
-        }
-
-        setTimeout(resolve, TILE_ANIMATION_DURATION);
-
-      }).then(() => {
-
-        if (++i < guessResults.length) {
-          return fn(i);
-        }
 
       });
+      
+      // Update button
+      if (result.status) {
+        document.querySelector(`button:nth-child(${~~result.digit || 10})`).classList.add(result.status);
+      }
 
-    }(0));
+    }
 
   }
 
@@ -428,7 +433,7 @@
 
       switch (state) {
         
-        case GUESSING: 
+        case GUESSING:
         
           if (input >= 0 && input < 10) {
 
@@ -492,9 +497,9 @@
 
       if (game.guess.length == game.answer.length) {
         
-        const {results, win} = checkGuess(game.guess, game.answer);
-        
         state = CHECKING;
+
+        const {results, win} = checkGuess(game.guess, game.answer);
 
         await renderGuessResults(game.guessIndex, results);
 
