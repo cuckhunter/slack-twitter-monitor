@@ -43,8 +43,8 @@
 
   .guess {
     display: flex;
-    align-items:  flex-start;
-    justify-content:  space-between;
+/*    align-items:  flex-start;
+*/    justify-content:  space-between;
     margin: 8px 0 0;
     /*text-align: center;*/
   }
@@ -54,10 +54,11 @@
     /*vertical-align: top;*/
     margin: 0 4px;
     border: 2px solid #666;
-    padding: 20px;
+    /*padding: 20px;*/
     --dimension: 1.5rem;
-    width: var(--dimension);
-    height: var(--dimension);
+    /*width: var(--dimension);
+    height: var(--dimension);*/
+    flex-basis:  var(--dimension);
     background: rgb(20,20,20);
     text-align: center;
     color: #ddd;
