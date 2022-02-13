@@ -11,7 +11,7 @@
 
 <style>
   body {
-    margin: 0 auto;
+    margin: 0;
     padding: 0 0 300px;
     font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
     background: rgb(20,20,20);
@@ -57,7 +57,7 @@
     --border: 2px;
     box-sizing: border-box;
     border: var(--border) solid #666;
-    width: var(--dimension);
+    flex-basis: var(--dimension);
     background: rgb(20,20,20);
     text-align: center;
     color: #ddd;
@@ -91,6 +91,15 @@
     animation-name: flip-tile;
     animation-duration: .3s;
     animation-fill-mode: forwards;
+  }
+
+  .digit.solved {
+    transition: none;
+    animation-name: bounce-tile;
+    animation-duration: 1s;
+    animation-fill-mode: none;
+    background: var(--color);
+    border-color: var(--color);
   }
 
   @keyframes pop-tile {
@@ -128,6 +137,36 @@
       transform: rotate3d(1, 0, 0, 0deg);
       background: var(--color);
       border-color: var(--color);
+    }
+  }
+
+  @keyframes bounce-tile {
+    from {
+      transform: translateY(0);
+    }
+
+    17% {
+      transform: translateY(calc(-2 * var(--gap)));
+    }
+
+    33% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(calc(-1 * var(--gap)));
+    }
+
+    67% {
+      transform: translateY(0);
+    }
+
+    83% {
+      transform: translateY(calc(-1/4 * var(--gap)));
+    }
+
+    to {
+      transform:  translateY(0);
     }
   }
 
@@ -190,10 +229,10 @@
   }
 
   .game-over-modal {
-    display: inline-block;
     position: fixed;
     top: 20%;
-    transform:  translateX(-50%);
+    left: 50%;
+    transform: translateX(-50%);
     padding: 40px 65px;
     background:  rgb(20,20,20,0.95);
     color: #ddd;
@@ -311,8 +350,10 @@
   const $ABSENT = 'absent';
   const $PRESENT = 'present';
   const $CORRECT = 'correct';
+  const $SOLVED = 'solved';
   const $GAME_OVER = 'game-over';
   const ANIMATION_FLIP_TILE = 'flip-tile';
+  const ANIMATION_BOUNCE_TILE = 'bounce-tile';
 
   function renderNewGame(answerLength) {
 
@@ -394,8 +435,29 @@
 
   }
 
-  function renderGameOver(guessIndex) {
+  async function renderGameOver(guessIndex, guessResults) {
 
+    const $guess = document.querySelector(`.${$GUESS}:nth-child(${guessIndex + 1})`);
+
+    for (let i = 0; i < guessResults.length; i++) {
+
+      await new Promise((resolve) => {
+        $guess.querySelector(`.${$DIGIT}:nth-child(${i + 1})`).classList.add($SOLVED);
+        setTimeout(resolve, 100);
+      });
+
+    }
+
+    await new Promise((resolve) => {
+
+      window.addEventListener('animationend', function animationEnd(event) {
+        if (event.target == $guess.querySelector(':last-child') && event.animationName == ANIMATION_BOUNCE_TILE) {
+          resolve();
+        }
+      });
+
+    });
+    
     document.body.insertAdjacentHTML('beforeend', `
   <div class="game-over">
     <div class="game-over-modal">
@@ -503,13 +565,13 @@
 
         await renderGuessResults(game.guessIndex, results);
 
-        state = GUESSING;
-
         if (win) {
 
           console.log('game over');
+          
+          await renderGameOver(game.guessIndex, results);
+
           state = OVER;
-          renderGameOver(game.guessIndex);
 
         } else {
 
@@ -521,6 +583,8 @@
           game.guessIndex++;        
 
           renderNewGuess(game.answer.length);
+
+          state = GUESSING;
 
         }
 
