@@ -461,7 +461,7 @@
     document.body.insertAdjacentHTML('beforeend', `
   <div class="game-over">
     <div class="game-over-modal">
-      <div class="game-over-text">You won in ${guessIndex + 1} guesses</div>
+      <div class="game-over-text">You won in ${guessIndex + 1 > 1 ? (guessIndex + 1)+ ' guesses' : '1 guess'}</div>
       <button class="game-over-retry">Retry</button>
     </div>
   </div>
