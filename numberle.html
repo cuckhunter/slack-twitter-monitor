@@ -38,34 +38,33 @@
    * Guesses styles
    */
   .guesses {
+    --dimension: 70px;
+    --gap: 8px;
+    display: flex;
+    flex-flow: column;
+    row-gap:  var(--gap);
     margin: 50px 0 0;
   }
 
   .guess {
     display: flex;
-/*    align-items:  flex-start;
-*/    justify-content:  space-between;
-    margin: 8px 0 0;
-    /*text-align: center;*/
+    height: var(--dimension);
+    justify-content: center;
+    column-gap: var(--gap);
   }
 
   .digit {
-    /*display: inline-block;*/
-    /*vertical-align: top;*/
-    margin: 0 4px;
-    border: 2px solid #666;
-    /*padding: 20px;*/
-    --dimension: 1.5rem;
-    /*width: var(--dimension);
-    height: var(--dimension);*/
-    flex-basis:  var(--dimension);
+    --border: 2px;
+    box-sizing: border-box;
+    border: var(--border) solid #666;
+    width: var(--dimension);
     background: rgb(20,20,20);
     text-align: center;
     color: #ddd;
     font-family: sans-serif;
     font-size: 2rem;
     font-weight: 600;
-    /*line-height: var(--dimension);*/
+    line-height: calc(var(--dimension) - 2 * var(--border));
   }
 
   .digit:not(:empty) {
