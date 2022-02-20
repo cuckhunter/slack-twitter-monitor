@@ -11,6 +11,7 @@
     "npm": ">=3"
   },
   "dependencies": {
+    "axios": "",
     "cheerio": ">=0.22.0",
     "cloudscraper": "",
     "dotenv": "",
