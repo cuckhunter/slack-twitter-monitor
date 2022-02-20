@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "",
+    "axios-debug-log": "",
     "cheerio": ">=0.22.0",
     "cloudscraper": "",
     "dotenv": "",
