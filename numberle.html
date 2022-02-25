@@ -47,7 +47,7 @@
     display: flex;
     flex-flow: column;
     row-gap:  var(--gap);
-    margin: 50px 0 0;
+    margin: 50px 0 10vh;
   }
 
   .guess {
@@ -275,7 +275,7 @@
 
     .guesses {
       --gap: 0.85vw;
-      margin: min(7vw, 50px) 0 1000px;
+      margin-top: min(7vw, 50px);
       align-items: center;
     }
 
@@ -291,8 +291,8 @@
     .buttons {
       display: grid;
       box-sizing: border-box;
-      grid-template-columns: repeat(5, 18%);
-      grid-template-rows: repeat(2, 28.6%) 25%;
+      grid-template-columns: repeat(5, 19%);
+      grid-template-rows: repeat(2, 30%) 25%;
       justify-content: space-between;
       align-content: space-between;
       padding: 8% 10%;
@@ -304,7 +304,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 0;
       height: unset;
       font-size: min(4vw, 1.6rem);
@@ -593,7 +593,13 @@
       }
     });
 
-    window.addEventListener('click', (event) => {
+    const eventName = (typeof window.orientation != undefined) ? 'click' : 'touchstart';
+
+    if (window.orientation != null) {
+      alert('hi');
+    }
+    
+    window.addEventListener(eventName, (event) => {
 
       if (event.target.matches(`.button:not(.${$ABSENT})`)) {
         handleInput(event.target.dataset.value || event.target.innerHTML);
