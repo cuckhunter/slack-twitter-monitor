@@ -9,7 +9,7 @@
     <meta property="og:description" content="Guess the hidden number.">
     <meta property="og:image" content="https://i.imgur.com/Ax2SunP.png">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
   
@@ -206,6 +206,7 @@
     line-height: 1.4rem;
     cursor: pointer;
     transition: transform .1s;
+    touch-action: manipulation;
   }
 
   .button[data-value="Enter"] {
@@ -593,10 +594,11 @@
       }
     });
 
-    const eventName = (window.orientation != null) ? 'click' : 'touchend';
+    // const eventName = (window.orientation != null) ? 'click' : 'touchend';
+    const eventName = 'click';
 
     if (window.orientation != null) {
-      alert('bye');
+      alert('byee');
     }
     
     window.addEventListener(eventName, (event) => {
