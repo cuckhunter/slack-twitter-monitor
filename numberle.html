@@ -292,7 +292,7 @@
       display: grid;
       box-sizing: border-box;
       grid-template-columns: repeat(5, 19%);
-      grid-template-rows: repeat(2, 30%) 25%;
+      grid-template-rows: repeat(2, 32%) 25%;
       justify-content: space-between;
       align-content: space-between;
       padding: 8% 10%;
@@ -593,7 +593,7 @@
       }
     });
 
-    const eventName = (typeof window.orientation != undefined) ? 'click' : 'touchstart';
+    const eventName = (window.orientation != null) ? 'click' : 'touchend';
 
     if (window.orientation != null) {
       alert('hi');
