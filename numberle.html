@@ -20,7 +20,6 @@
 
   body {
     margin: 0;
-    min-width: 300px;
     text-align: center;
   }
 
@@ -62,7 +61,7 @@
     display: flex;
     box-sizing: border-box;
     border: 2px solid #666;
-    width: var(--dimension);
+    flex-basis: var(--dimension);
     justify-content: center;
     align-items: center;
     background: rgb(20, 20, 20);
@@ -270,23 +269,22 @@
 
     .header {
       font-size: min(6vw, 2rem);
-      --letter-spacing: min(1.4vw, 0.5rem);
+      --letter-spacing: 0.6vw;
     }
 
     .guesses {
-      --gap: 1%;
-      margin: 8vw 0 1000px;
+      --gap: 0.85vw;
+      margin: min(7vw, 50px) 0 1000px;
       align-items: center;
     }
 
     .guess {
-      margin-bottom: 1%;
       width: 84%;
     }
 
     .digit {
-      height: unset;
-      font-size: min(6vw, 1.6rem);
+      flex-grow: 1;
+      font-size: min(6vw, 2.2rem);
     }
 
     .buttons {
@@ -330,17 +328,17 @@
 
     .game-over-modal {
       margin-top: 30vw;
-      padding: 10% 12% 10%;
+      padding: 8% 12%;
     }
 
     .game-over-text {
-      font-size: 4vw;
+      font-size: 3vw;
     }
 
     .game-over-retry {
-      margin-top: 20%;
+      margin-top: 25%;
       padding: 6% 26%;
-      font-size: 3.7vw;
+      font-size: 2.8vw;
     }
 
   }
@@ -349,7 +347,6 @@
 
   </head>
   <body>
-
     <div class="header">NUMBERLE</div>
     <div class="guesses"></div>
     <div class="buttons">
