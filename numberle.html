@@ -581,6 +581,10 @@
     let state = GUESSING;
     renderNewGame(game.answer.length);
 
+    window.addEventListener('error', (event) => {
+      alert(event.type + ' - ' + event.message);
+    });
+
     window.addEventListener('keydown', (event) => {
       if (!(event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)) {
         handleInput(event.key);
