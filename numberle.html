@@ -9,7 +9,7 @@
     <meta property="og:description" content="Guess the hidden number.">
     <meta property="og:image" content="https://i.imgur.com/Ax2SunP.png">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
   
@@ -19,8 +19,12 @@
   }
 
   body {
-    margin: 0;
+    margin: 0 0 200px;
     text-align: center;
+  }
+
+  button {
+    touch-action: manipulation;
   }
 
   .header {
@@ -47,7 +51,7 @@
     display: flex;
     flex-flow: column;
     row-gap:  var(--gap);
-    margin: 50px 0 10vh;
+    margin: 50px 0 0;
   }
 
   .guess {
@@ -206,7 +210,6 @@
     line-height: 1.4rem;
     cursor: pointer;
     transition: transform .1s;
-    touch-action: manipulation;
   }
 
   .button[data-value="Enter"] {
@@ -261,13 +264,19 @@
     display: inline-block;
     vertical-align: top;
     margin: 40px 0 0;
+    border: 0;
     padding: 12px 48px;
     background: rgb(83, 141, 78);
     font-size: 1rem;
+    color: white;
     cursor: pointer;
   }
 
   @media only screen and (max-width: 800px) {
+
+    body {
+      margin: 0 0 50vw;
+    }
 
     .header {
       font-size: min(6vw, 2rem);
@@ -276,7 +285,7 @@
 
     .guesses {
       --gap: 0.85vw;
-      margin-top: min(7vw, 50px);
+      margin: min(7vw, 50px) 0 0;
       align-items: center;
     }
 
@@ -565,7 +574,7 @@
   <div class="game-over">
     <div class="game-over-modal">
       <div class="game-over-text">You won in ${guessIndex + 1 > 1 ? (guessIndex + 1)+ ' guesses' : '1 guess'}</div>
-      <div class="game-over-retry">Retry</div>
+      <button class="game-over-retry">Retry</button>
     </div>
   </div>
   `);
@@ -593,15 +602,8 @@
         return false;
       }
     });
-
-    // const eventName = (window.orientation != null) ? 'click' : 'touchend';
-    const eventName = 'click';
-
-    if (window.orientation != null) {
-      alert('byee');
-    }
     
-    window.addEventListener(eventName, (event) => {
+    window.addEventListener('click', (event) => {
 
       if (event.target.matches(`.button:not(.${$ABSENT})`)) {
         handleInput(event.target.dataset.value || event.target.innerHTML);
