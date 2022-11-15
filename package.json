@@ -11,7 +11,7 @@
     "npm": ">=3"
   },
   "dependencies": {
-    "axios": "0.27.2",
+    "axios": "",
     "axios-debug-log": "",
     "cheerio": ">=0.22.0",
     "cloudscraper": "",
