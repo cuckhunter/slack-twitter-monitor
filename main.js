@@ -43,9 +43,9 @@ process.on('uncaughtException', async function(error) {
 
     console.log(`Reported error to Slack channel ${channel}`);
 
-    await new Promise((resolve, reject) => {
-      setTimeout(resolve, 3 * 60 * 1000);
-    });
+    // await new Promise((resolve, reject) => {
+    //   setTimeout(resolve, 3 * 60 * 1000);
+    // });
 
   } catch (e) {
     console.log('Error-handling error:', e);
