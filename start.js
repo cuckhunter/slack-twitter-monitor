@@ -1,6 +1,7 @@
 'use strict';
 
-import { execFile } from 'node:child_process';
+// import { execFile } from 'node:child_process';
+const { execFile } = require('node:child_process');
 
 const REDEPLOY_LIMIT = 10; // 0 for no limit
 let redeploys = 0;
