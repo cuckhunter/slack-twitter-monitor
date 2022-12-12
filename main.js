@@ -1,21 +1,14 @@
 'use strict';
 
-let active = false;
+let count = 0;
 
 process.on('uncaughtException', async function(error) {
- 
-  console.log('in uncaughtException:', error);
+
+  const number = count++;
 
   try {
 
-    if (active) {
-      console.error('Error-handling error active:', error);
-      process.exit(1);
-    }
-
-    active = true;
-
-    console.error('Uncaught error:', error);
+    console.error(`in uncaughtException ${number}:`, error);
 
     const request = require('request');
     const channel = 'logging';
@@ -41,14 +34,14 @@ process.on('uncaughtException', async function(error) {
 
     });
 
-    console.log(`Reported error to Slack channel ${channel}`);
+    console.error(`Reported error to Slack channel ${channel}`);
 
     // await new Promise((resolve, reject) => {
     //   setTimeout(resolve, 3 * 60 * 1000);
     // });
 
   } catch (e) {
-    console.log('Error-handling error:', e);
+    console.error(`Error-handling error ${count}:`, e);
   } finally {
     process.exit(1);
   }
