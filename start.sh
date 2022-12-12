@@ -15,7 +15,7 @@ on_error() {
 		exit 1
 	fi
 
-	printf "%.0f" $(( redeploy_interval * 1.5 ** redeploys++ )) | read deploy_interval
+	printf "%.0f" $(( redeploy_interval * 1.5 ** redeploys++ )) | read redeploy_interval
 	echo "Redeploy attempt #$redeploys in $redeploy_interval seconds..."
 	sleep $redeploy_interval
 

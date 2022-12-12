@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "repository": {},
   "scripts": {
-    "start": "./start.sh"
+    "start": "node --harmony start"
   },
   "engines": {
     "node": ">=7",
